@@ -127,8 +127,8 @@ public class MainActivity extends AppCompatActivity {
         myListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String[] itemString = (String[]) adapterView.getItemAtPosition(i);
-                //Log.i("Tapped on: ", m_li.get(formList[i]);
+             //   String[] itemString = (String[]) adapterView.getItemAtPosition(i);
+                Log.i("Tapped on: ", formList.get(i).toString());
                 //Log.i("Tapped on: ", m_li.get(itemString[i]));
             }
         });
