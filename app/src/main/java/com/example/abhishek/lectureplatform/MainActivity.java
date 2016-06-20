@@ -8,7 +8,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 import com.google.android.gms.appindexing.Action;
@@ -24,10 +26,15 @@ import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     JSONObject obj = null;
+    List<HashMap<String, String>> formList;
+    String formula_value, url_value;
+    ListView myListView;
+    HashMap<String, String> m_li;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -39,8 +46,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ListView myListView = (ListView) findViewById(R.id.myListView);
-
+        myListView = (ListView) findViewById(R.id.myListView);
+/*
         final ArrayList<String> myFriends = new ArrayList<String>();
 
         myFriends.add("Siddharth");
@@ -59,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
+*/
         loadJSON();
 
         // ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -91,15 +98,16 @@ public class MainActivity extends AppCompatActivity {
         try {
             JSONObject obj = new JSONObject(loadJSONFromAsset());
             JSONArray m_jArry = obj.getJSONArray("formules");
-            ArrayList<HashMap<String, String>> formList = new ArrayList<HashMap<String, String>>();
-            HashMap<String, String> m_li;
+            formList = new ArrayList<HashMap<String, String>>();
+
 
             for (int i = 0; i < m_jArry.length(); i++) {
                 JSONObject jo_inside = m_jArry.getJSONObject(i);
                 Log.d("Details-->", jo_inside.getString("formule"));
-                String formula_value = jo_inside.getString("formule");
-                String url_value = jo_inside.getString("url");
+                formula_value = jo_inside.getString("formule");
+                url_value = jo_inside.getString("url");
 
+                Log.i(formula_value, url_value);
                 //Add your values in your `ArrayList` as below:
                 m_li = new HashMap<String, String>();
                 m_li.put("formule", formula_value);
@@ -112,6 +120,18 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
             Log.i("This also Not", "Done");
         }
+
+        ListAdapter adapter = new SimpleAdapter(getApplicationContext(), formList, android.R.layout.simple_list_item_1, new String[] { "formule" }, new int[] { android.R.id.text1 });
+        myListView.setAdapter(adapter);
+
+        myListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                String[] itemString = (String[]) adapterView.getItemAtPosition(i);
+                //Log.i("Tapped on: ", m_li.get(formList[i]);
+                //Log.i("Tapped on: ", m_li.get(itemString[i]));
+            }
+        });
     }
 
 
