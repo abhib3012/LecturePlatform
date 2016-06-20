@@ -28,7 +28,6 @@ import java.util.HashMap;
 public class MainActivity extends AppCompatActivity {
 
     JSONObject obj = null;
-    ArrayList<HashMap<String, String>> formList;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -41,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         ListView myListView = (ListView) findViewById(R.id.myListView);
-/*
+
         final ArrayList<String> myFriends = new ArrayList<String>();
 
         myFriends.add("Siddharth");
@@ -60,10 +59,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-        */
-
-
-        myListView.setAdapter(arrayAdapter);
 
         loadJSON();
 
@@ -86,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
             ex.printStackTrace();
             return null;
         }
+        Log.i("This Not", "Done");
         return json;
 
     }
@@ -93,9 +89,9 @@ public class MainActivity extends AppCompatActivity {
     public void loadJSON() {
 
         try {
-            obj = new JSONObject(loadJSONFromAsset());
+            JSONObject obj = new JSONObject(loadJSONFromAsset());
             JSONArray m_jArry = obj.getJSONArray("formules");
-            formList = new ArrayList<HashMap<String, String>>();
+            ArrayList<HashMap<String, String>> formList = new ArrayList<HashMap<String, String>>();
             HashMap<String, String> m_li;
 
             for (int i = 0; i < m_jArry.length(); i++) {
@@ -112,8 +108,6 @@ public class MainActivity extends AppCompatActivity {
                 formList.add(m_li);
             }
             Log.i("Done", "Done");
-
-
         } catch (JSONException e) {
             e.printStackTrace();
             Log.i("This also Not", "Done");
