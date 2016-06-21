@@ -27,12 +27,13 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
     JSONObject obj = null;
     List<HashMap<String, String>> formList;
-    String formula_value, url_value;
+    String formula_value, url_value, key, value;
     ListView myListView;
     HashMap<String, String> m_li;
     /**
@@ -123,12 +124,29 @@ public class MainActivity extends AppCompatActivity {
 
         ListAdapter adapter = new SimpleAdapter(getApplicationContext(), formList, android.R.layout.simple_list_item_1, new String[] { "formule" }, new int[] { android.R.id.text1 });
         myListView.setAdapter(adapter);
+        Log.i("Keyset is", m_li.keySet().toString());
+
+        for (HashMap<String, String> map : formList) {
+            for (Map.Entry<String, String> mapEntry : map.entrySet()) {
+                key = mapEntry.getKey();
+                value = mapEntry.getValue();
+            }
+        }
+
+        Log.i("Key is", key);
+        Log.i("Value is", value);
 
         myListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
              //   String[] itemString = (String[]) adapterView.getItemAtPosition(i);
-                Log.i("Tapped on: ", formList.get(i).toString());
+                String itemString = formList.get(i).toString();
+
+                Log.i("Tapped on: ", formList.get(i).get("formule"));
+                Log.i("Tapped on: ", formList.get(i).get("url"));
+
+
+
                 //Log.i("Tapped on: ", m_li.get(itemString[i]));
             }
         });
